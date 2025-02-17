@@ -4,10 +4,17 @@
 #include <QWidget>
 #include <QFileDialog>
 #include "dataresult.h"
+#include "tableshow.h"
 #include <QPalette>
 #include <QBrush>
 #include <QColor>
 #include <QMessageBox>
+#include "script.h"
+#include <QMap>
+#include <QStringList>
+#include <QList>
+
+using namespace std;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -25,12 +32,15 @@ public:
 
 private slots:
     void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
+    void on_pushButton_3_clicked();
 
 private:
     Ui::Widget *ui;
     DataResult *dataresult;
+    TableShow *tableshow;
+    std::vector<std::vector<std::string>> data_table;
 signals:
     void show_data(QMap<QString, QString>& text_data);
+    void show_table_data(QList<QStringList>& data_table_to_view);
 };
 #endif // WIDGET_H

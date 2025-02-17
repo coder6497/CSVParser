@@ -7,7 +7,6 @@ DataResult::DataResult(QWidget *parent)
 {
     ui->setupUi(this);
     setWindowTitle("Результат");
-    setFixedSize(600, 300);
     int start = 100, end = 800;
     move(rand() % (end - start + 1) + start, rand() % (end - start + 1) + start);
     QPalette pal = palette();
@@ -26,7 +25,6 @@ void DataResult::updateResultData(QMap<QString, QString> &text_data){
     ui->tableWidget->setHorizontalHeaderLabels({"Ключ", "Значение"});
     int row_count = 0;
     for (auto [key, value]: text_data.asKeyValueRange()){
-        qDebug() << key << value;
         ui->tableWidget->setItem(row_count, 0, new QTableWidgetItem(key));
         ui->tableWidget->setItem(row_count, 1, new QTableWidgetItem(value));
         row_count++;

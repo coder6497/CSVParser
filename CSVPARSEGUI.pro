@@ -12,18 +12,27 @@ SOURCES += \
     dataresult.cpp \
     main.cpp \
     script.cpp \
+    tableshow.cpp \
     widget.cpp
 
 HEADERS += \
     dataresult.h \
     script.h \
+    tableshow.h \
     widget.h
 
 FORMS += \
     dataresult.ui \
+    tableshow.ui \
     widget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+DISTFILES += \
+    csvgen/csv_generate.py \
+    csvgen/peoples.csv \
+    test_files/csv_generate.py \
+    test_files/peoples.csv

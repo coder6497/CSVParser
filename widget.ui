@@ -9,8 +9,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>637</width>
-    <height>442</height>
+    <width>640</width>
+    <height>459</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,10 +19,10 @@
   <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>80</x>
-     <y>10</y>
-     <width>470</width>
-     <height>81</height>
+     <x>10</x>
+     <y>0</y>
+     <width>621</width>
+     <height>91</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -44,7 +44,7 @@ border-color: black;</string>
      <x>10</x>
      <y>100</y>
      <width>581</width>
-     <height>121</height>
+     <height>123</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout_6">
@@ -142,18 +142,18 @@ border-color: black;</string>
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="horizontalLayoutWidget_2">
+  <widget class="QWidget" name="verticalLayoutWidget">
    <property name="geometry">
     <rect>
      <x>10</x>
-     <y>230</y>
+     <y>260</y>
      <width>581</width>
-     <height>161</height>
+     <height>181</height>
     </rect>
    </property>
-   <layout class="QHBoxLayout" name="horizontalLayout_7">
+   <layout class="QVBoxLayout" name="verticalLayout">
     <item>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="pushButton_3">
       <property name="styleSheet">
        <string notr="true">font: 40pt;
 color: rgb(0, 0, 0);
