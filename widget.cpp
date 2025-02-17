@@ -37,38 +37,49 @@ void Widget::on_pushButton_clicked()
 
 void Widget::on_pushButton_3_clicked()
 {
-    auto start = chrono::high_resolution_clock::now();
-    QMap<QString, QString> text_data;
-    char delimeter = ui->lineEdit->text()[0].toLatin1();
-    string key_t = ui->lineEdit_2->text().toStdString(), filename = ui->label_3->text().toStdString();
+    // Если поля вввода не пустые
+    if (!ui->label_3->text().isEmpty() && !ui->lineEdit->text().isEmpty() && !ui->lineEdit_2->text().isEmpty()){
 
-    data_table = read_file(filename, delimeter);
-    map<string, vector<string>> data_map = convert_to_map(data_table);
-    map<string, string> data = get_values(data_map, key_t);
-    for (auto& [key, value]: data) text_data[QString::fromStdString(key)] = QString::fromStdString(value);
+        // Прием данных с полей ввода и преобразование в std::string
+        auto start = chrono::high_resolution_clock::now();
+        QMap<QString, QString> text_data;
+        char delimeter = ui->lineEdit->text()[0].toLatin1();
+        string key_t = ui->lineEdit_2->text().toStdString(), filename = ui->label_3->text().toStdString();
 
-    dataresult = new DataResult();
-    dataresult->show();
-    connect(this, &Widget::show_data, dataresult, &DataResult::updateResultData);
-    emit show_data(text_data);
+        // Вызов функций обработки данных
+        data_table = read_file(filename, delimeter);
+        map<string, vector<string>> data_map = convert_to_map(data_table);
+        map<string, string> data = get_values(data_map, key_t);
+        for (auto& [key, value]: data) text_data[QString::fromStdString(key)] = QString::fromStdString(value);
 
-    auto end = chrono::high_resolution_clock::now();
-    chrono::duration<double, milli> duration = end - start;
-    cout << duration.count() << "ms" << endl;
+        // Определение класса Data result, отображение окна, релизация сигнала для передачи данных в другой класс окна
+        dataresult = new DataResult();
+        dataresult->show();
+        connect(this, &Widget::show_data, dataresult, &DataResult::updateResultData);
+        emit show_data(text_data);
 
-    QList<QStringList> data_table_to_view;
-    for(const auto& row: data_table){
-        QStringList temp_lst;
-        for(const auto& elem: row){
-            temp_lst.append(QString::fromStdString(elem));
+        //Замер производительности при обработки данных
+        auto end = chrono::high_resolution_clock::now();
+        chrono::duration<double, milli> duration = end - start;
+        cout << duration.count() << "ms" << endl;
+
+        //Заполнение QList данными с std::vector
+        QList<QStringList> data_table_to_view;
+        for(const auto& row: data_table){
+            QStringList temp_lst;
+            for(const auto& elem: row){
+                temp_lst.append(QString::fromStdString(elem));
+            }
+            data_table_to_view.append(temp_lst);
         }
-        data_table_to_view.append(temp_lst);
-    }
 
-    tableshow = new TableShow();
-    tableshow->show();
-    connect(this, &Widget::show_table_data, tableshow, &TableShow::updateTableData);
-    emit show_table_data(data_table_to_view);
+        // Определение класса Data result, отображение окна, релизация сигнала для передачи данных в другой класс окна
+        tableshow = new TableShow();
+        tableshow->show();
+        connect(this, &Widget::show_table_data, tableshow, &TableShow::updateTableData);
+        emit show_table_data(data_table_to_view);
+    }
 }
+
 
 

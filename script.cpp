@@ -1,5 +1,5 @@
 #include "script.h"
-
+#include <QMessageBox>
 
 vector<vector<string>> read_file(string filename, char delimeter){
     vector<vector<string>> data;
@@ -19,7 +19,9 @@ vector<vector<string>> read_file(string filename, char delimeter){
         return data;
     }
     else{
-        cout << "Неверный разделитель" << endl;
+        QMessageBox msgbox;
+        msgbox.setInformativeText("Неверный формат разделителя");
+        msgbox.exec();
     }
     return data;
 }
@@ -75,7 +77,9 @@ map<string, string> get_values(map<string, vector<string>> data_map, string key_
         return data;
     }
     else{
-        cout << "Ключ не найден" << endl;
+        QMessageBox msgbox;
+        msgbox.setInformativeText("Неверные данные");
+        msgbox.exec();
     }
     return data;
 

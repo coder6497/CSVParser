@@ -68,7 +68,8 @@ border-color: black;</string>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">font-size:25px</string>
+    <string notr="true">font-size:25px;
+color: rgb(0, 0, 0);</string>
    </property>
    <property name="text">
     <string>Данные таблицы</string>
