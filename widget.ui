@@ -153,6 +153,23 @@ border-color: black;</string>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
     <item>
+     <widget class="QComboBox" name="comboBox">
+      <property name="styleSheet">
+       <string notr="true">font: 22pt;</string>
+      </property>
+      <item>
+       <property name="text">
+        <string>Отобразить таблицу</string>
+       </property>
+      </item>
+      <item>
+       <property name="text">
+        <string>Отобразить результаты</string>
+       </property>
+      </item>
+     </widget>
+    </item>
+    <item>
      <widget class="QPushButton" name="pushButton_3">
       <property name="styleSheet">
        <string notr="true">font: 40pt;
