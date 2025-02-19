@@ -12,13 +12,6 @@ Widget::Widget(QWidget *parent)
     QPalette pal = palette();
     pal.setBrush(QPalette::Window, QBrush(QColor(209, 255, 213), Qt::SolidPattern));
     setPalette(pal);
-    QMessageBox msgbox;
-    msgbox.setText("От разработчика");
-    msgbox.setInformativeText("Данная программа поддерживает только стандартный формат разделителей CSV(,),"
-                              " при попытки обработать файл с другими разделителями вы получите ошибку."
-                              " Если фаш файл имеет сторонние разделители, вы можете запустить Python скрипт, который прилагается к данной программе,"
-                              " он отредактирует ваш файл под нужный формат разделителей.");
-    msgbox.exec();
 }
 
 Widget::~Widget()

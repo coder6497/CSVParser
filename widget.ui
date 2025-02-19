@@ -44,7 +44,7 @@ border-color: black;</string>
      <x>10</x>
      <y>100</y>
      <width>581</width>
-     <height>123</height>
+     <height>124</height>
     </rect>
    </property>
    <layout class="QFormLayout" name="formLayout_6">
@@ -64,13 +64,16 @@ color: rgb(0, 0, 0);</string>
       <item>
        <widget class="QPushButton" name="pushButton">
         <property name="styleSheet">
-         <string notr="true">font: 16pt;
+         <string notr="true">QPushButton{font: 16pt;
+color: rgb(0, 0, 0);
 color: rgb(0, 0, 0);
 background-color: rgb(151, 248, 255);
 border-radius:8px;
 border-style: outset;
 border-width: 1px;
-border-color: black;</string>
+border-color: black;}
+
+QPushButton:pressed{background-color: rgb(0, 200, 214);}</string>
         </property>
         <property name="text">
          <string>Выбрать</string>
@@ -155,7 +158,7 @@ border-color: black;</string>
     <item>
      <widget class="QComboBox" name="comboBox">
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">color: rgb(0, 0, 0);</string>
       </property>
       <item>
        <property name="text">
@@ -172,14 +175,16 @@ border-color: black;</string>
     <item>
      <widget class="QPushButton" name="pushButton_3">
       <property name="styleSheet">
-       <string notr="true">font: 40pt;
+       <string notr="true">QPushButton{font: 64pt;
 color: rgb(0, 0, 0);
 color: rgb(0, 0, 0);
 background-color: rgb(151, 248, 255);
 border-radius:8px;
 border-style: outset;
 border-width: 1px;
-border-color: black;</string>
+border-color: black;}
+
+QPushButton:pressed{background-color: rgb(0, 200, 214);}</string>
       </property>
       <property name="text">
        <string>Обработать</string>
