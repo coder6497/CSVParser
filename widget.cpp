@@ -31,27 +31,26 @@ void Widget::on_pushButton_clicked()
     QString fileName = QFileDialog::getOpenFileName(nullptr, "Выберите CSV файл", "", "CSV Files (*.csv);;All Files (*)");
     if (!fileName.isEmpty()) {
         ui->label_3->setText(fileName);
-    }
+ }
 }
 
-void Widget::create_data_result(QMap<QString, QString> text_data){
-    if (ui->comboBox->currentIndex() == 1){
-        dataresult = new DataResult();
+void Widget::choice_from_combobox(QMap<QString, QString> text_data, QList<QStringList> data_table_to_view){
+    tableshow = new TableShow();
+    dataresult = new DataResult();
+    switch (ui->comboBox->currentIndex()){
+    case 1:
         dataresult->show();
-        connect(this, &Widget::show_data, dataresult, &DataResult::updateResultData);
-        emit show_data(text_data);
-    }
-}
-
-void Widget::create_table_show(QList<QStringList> data_table_to_view){
-    if (ui->comboBox->currentIndex() == 0){
-        tableshow = new TableShow();
+        break;
+    case 0:
         tableshow->show();
-        connect(this, &Widget::show_table_data, tableshow, &TableShow::updateTableData);
-        emit show_table_data(data_table_to_view);
+        break;
     }
-
+    connect(this, &Widget::show_data, dataresult, &DataResult::updateResultData);
+    emit show_data(text_data);
+    connect(this, &Widget::show_table_data, tableshow, &TableShow::updateTableData);
+    emit show_table_data(data_table_to_view);
 }
+
 
 void Widget::on_pushButton_3_clicked()
 {
@@ -77,8 +76,7 @@ void Widget::on_pushButton_3_clicked()
             }
             data_table_to_view.append(temp_lst);
         }
-        create_data_result(text_data);
-        create_table_show(data_table_to_view);
+        choice_from_combobox(text_data, data_table_to_view);
     }
 }
 

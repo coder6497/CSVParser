@@ -39,8 +39,7 @@ private:
     DataResult *dataresult;
     TableShow *tableshow;
     std::vector<std::vector<std::string>> data_table;
-    void create_data_result(QMap<QString, QString> text_data);
-    void create_table_show(QList<QStringList> data_table_to_view);
+    void choice_from_combobox(QMap<QString, QString> text_data, QList<QStringList> data_table_to_view);
 signals:
     void show_data(QMap<QString, QString>& text_data);
     void show_table_data(QList<QStringList>& data_table_to_view);

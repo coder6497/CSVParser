@@ -3,7 +3,7 @@
 
 vector<vector<string>> read_file(string filename, char delimeter){
     vector<vector<string>> data;
-    if (delimeter == ','){
+    if (delimeter == ',' || delimeter == ';'){
         ifstream in(filename);
         string read;
         while (getline(in, read)){

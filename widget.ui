@@ -155,7 +155,7 @@ border-color: black;</string>
     <item>
      <widget class="QComboBox" name="comboBox">
       <property name="styleSheet">
-       <string notr="true">font: 22pt;</string>
+       <string notr="true"/>
       </property>
       <item>
        <property name="text">
