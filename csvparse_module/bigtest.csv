@@ -1,0 +1,21 @@
+employee_id,first_name,last_name,department,salary,hire_date,country
+1,Alice,Smith,Sales,60000,2022-05-15,USA
+2,Bob,Johnson,Marketing,75000,2021-11-01,Canada
+3,Charlie,Brown,IT,90000,2023-01-20,UK
+4,David,Williams,HR,55000,2022-09-10,Australia
+5,Eve,Jones,Finance,80000,2020-03-05,Germany
+6,Fernando,Garcia,Sales,65000,2023-04-01,Spain
+7,Greta,Rodriguez,Marketing,70000,2021-07-12,Mexico
+8,Hans,Mueller,IT,95000,2022-02-28,Switzerland
+9,Isabella,Lopez,HR,50000,2023-06-18,Argentina
+10,Jack,Lee,Finance,85000,2020-10-25,China
+11,Kate,Wilson,Sales,58000,2022-08-03,New Zealand
+12,Liam,Anderson,Marketing,72000,2021-04-15,Brazil
+13,Mia,Thomas,IT,88000,2023-03-01,France
+14,Noah,Jackson,HR,53000,2022-12-24,South Africa
+15,Olivia,White,Finance,78000,2020-06-09,Italy
+16,Peter,Harris,Sales,62000,2023-05-07,Japan
+17,Quinn,Martin,Marketing,68000,2021-09-20,Sweden
+18,Ryan,Thompson,IT,92000,2022-07-01,Netherlands
+19,Sophia,Garcia,HR,56000,2023-02-10,Russia
+20,Tom,Martinez,Finance,82000,2020-09-18,India
