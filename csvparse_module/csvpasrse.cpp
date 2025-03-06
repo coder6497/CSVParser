@@ -1,24 +1,32 @@
-#include <iostream>
-#include <vector>
-#include <map>
-#include <string>
 #include <algorithm>
-#include <sstream>
 #include <fstream>
+#include <iostream>
+#include <map>
+#include <sstream>
+#include <string>
+#include <vector>
+#include <pybind11/pybind11.h>
+#include <pybind11/stl.h>
 
 using namespace std;
 
+namespace py = pybind11;
 
-vector<vector<string>> read_file(string filename, char delimeter){
+
+vector<vector<string>> read_file(string filename, char delimeter)
+{
     vector<vector<string>> data;
-    if (delimeter == ',' || delimeter == ';'){
+    if (delimeter == ',' || delimeter == ';')
+    {
         ifstream in(filename);
         string read;
-        while (getline(in, read)){
+        while (getline(in, read))
+        {
             vector<string> row;
             string elem;
             stringstream ss(read);
-            while (getline(ss, elem, delimeter)){
+            while (getline(ss, elem, delimeter))
+            {
                 row.push_back(elem);
             }
             data.push_back(row);
@@ -26,7 +34,8 @@ vector<vector<string>> read_file(string filename, char delimeter){
         in.close();
         return data;
     }
-    else{
+    else
+    {
         cout << "Wrong format for delimeter" << endl;
     }
     return data;
@@ -73,7 +82,8 @@ map<string, string> get_values(map<string, vector<string>> data_map, string key_
 {
     map<string, string> data;
     auto it = data_map.find(key_t);
-    if (it != data_map.end()){
+    if (it != data_map.end())
+    {
         auto min = *min_element(data_map[key_t].begin(), data_map[key_t].end());
         auto max = *max_element(data_map[key_t].begin(), data_map[key_t].end());
         long double sum = 0, mid;
@@ -100,36 +110,10 @@ map<string, string> get_values(map<string, vector<string>> data_map, string key_
 
 }
 
-void print_data(map<string, vector<string>> data_map, map<string, string> result_data)
+PYBIND11_MODULE(csvparse, m)
 {
-    for (const auto& [key, value]: data_map)
-    {
-        cout << key << " : ";
-        for (const auto& item: value)
-            cout << item << " ";
-        cout << endl;
-    }
-    cout << endl;
-    for (const auto& [key, value]: result_data)
-        cout << key << " : " << value << endl;
-    cout << endl;
-}
-
-int main()
-{
-    string filename, key_t;
-    char delimeter;
-    cout << "Enter filename" << endl;
-    cin >> filename;
-    cout << "Enter delimeter" << endl;
-    cin >> delimeter;
-    cout << "Enter key" << endl;
-    cin >> key_t;
-    if (!filename.empty() && !key_t.empty() && delimeter != '\0')
-    {
-        vector<vector<string>> data_table = read_file(filename, delimeter);
-        map<string, vector<string>> data_map = convert_to_map(data_table);
-        map<string, string> result_data = get_values(data_map, key_t);
-        print_data(data_map, result_data);
-    }
+    m.doc() = "csvparse plugin";
+    m.def("get_data_table", &read_file, "function which get data table from file");
+    m.def("get_dict_from_table", &convert_to_map, "function which get dictonaty grom data table");
+    m.def("get_parse_result", &get_values, "function which get result from data processing");
 }
