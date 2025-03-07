@@ -1,8 +1,6 @@
-import filecmp
-
 import telebot, os, token_file, csvparse
 from telebot import types
-from sqlalchemy import Table, Column, Integer, String, MetaData, create_engine, insert
+from sqlalchemy import Table, Column, Integer, String, MetaData, create_engine, insert, select, delete
 from hashlib import md5
 
 metadata = MetaData()
@@ -35,10 +33,11 @@ def start(message):
 @bot.message_handler(commands=['getres'])
 def get_res(message):
     args = message.text.split()[1:]
+    user_hash_id = md5(str(message.from_user.id).encode()).hexdigest()
     if len(args) == 3:
         try:
             filename, delimeter, header = args[0], args[1], args[2]
-            data_table = csvparse.get_data_table(os.path.join('files', filename), delimeter)
+            data_table = csvparse.get_data_table(os.path.join('files', user_hash_id + filename), delimeter)
             data_map = csvparse.get_dict_from_table(data_table)
             result = csvparse.get_parse_result(data_map, header)
             res_to_show = ''
@@ -67,8 +66,17 @@ def delete_table(message):
         bot.send_message(message.chat.id, "Выберите то что надо удалить\n", reply_markup=keyboard)
     if user_hash_id + message.text in os.listdir("files"):
         os.remove(os.path.join('files', user_hash_id + message.text))
+        with engine.connect() as con:
+            to_delete = delete(user_data).where(user_data.c.telegram_user_id == user_hash_id)
+            con.execute(to_delete)
+            con.commit()
     if message.text == "Посмотреть файлы":
-        bot.send_message(message.chat.id, 'Список файлов:\n\n' + '\n'.join(os.listdir('files'))[32:])
+        bot.reply_to(message, "Список файлов")
+        with engine.connect() as con:
+            to_read = select(user_data).where(user_data.c.telegram_user_id == user_hash_id)
+            result = con.execute(to_read)
+            all_rows = result.fetchall()
+            list(map(lambda row: bot.send_message(message.chat.id, row.filename[32:]), all_rows))
 
 
 @bot.message_handler(content_types=['document'])
@@ -83,9 +91,9 @@ def handle_document(message):
             new_file.write(downloaded_file)
         new_file.close()
         bot.reply_to(message, f"Файл {filename} отправлен на сервер")
-    insert_query = insert(user_data).values(telegram_user_id=hash_user_id, filename=filename_for_current_user)
-    with engine.connect() as con:
-        con.execute(insert_query)
-        con.commit()
+        insert_query = insert(user_data).values(telegram_user_id=hash_user_id, filename=filename_for_current_user)
+        with engine.connect() as con:
+            con.execute(insert_query)
+            con.commit()
 
 bot.polling(non_stop=True)
