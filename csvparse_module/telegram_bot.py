@@ -1,22 +1,5 @@
-import filecmp
-
 import telebot, os, token_file, csvparse
 from telebot import types
-from sqlalchemy import Table, Column, Integer, String, MetaData, create_engine, insert
-from hashlib import md5
-
-metadata = MetaData()
-
-engine = create_engine('sqlite:///data_base.db')
-
-user_data = Table(
-    'user_data', metadata,
-    Column('id', Integer, primary_key=True),
-    Column('telegram_user_id', String),
-    Column('filename', String)
-)
-
-metadata.create_all(engine)
 
 bot = telebot.TeleBot(token_file.token)
 try:
@@ -50,6 +33,7 @@ def get_res(message):
     else:
         bot.reply_to(message, 'Неправильный формат команды /get_res файл разделитель заголовок')
 
+
 @bot.message_handler(commands=['help'])
 def get_help(message):
     with open('FAQ.txt', 'r', encoding='utf-8') as f:
@@ -60,15 +44,14 @@ def get_help(message):
 @bot.message_handler(func=lambda message: True)
 def delete_table(message):
     keyboard = types.ReplyKeyboardMarkup()
-    user_hash_id = md5(str(message.from_user.id).encode()).hexdigest()
-    list(map(lambda btn: keyboard.add(btn[32:]), os.listdir("files")))
+    list(map(lambda btn: keyboard.add(btn), os.listdir("files")))
     keyboard.add("/start")
     if message.text == "Удалить файлы":
         bot.send_message(message.chat.id, "Выберите то что надо удалить\n", reply_markup=keyboard)
-    if user_hash_id + message.text in os.listdir("files"):
-        os.remove(os.path.join('files', user_hash_id + message.text))
+    if message.text in os.listdir("files"):
+        os.remove(os.path.join('files', message.text))
     if message.text == "Посмотреть файлы":
-        bot.send_message(message.chat.id, 'Список файлов:\n\n' + '\n'.join(os.listdir('files'))[32:])
+        bot.send_message(message.chat.id, 'Список файлов:\n\n' + '\n'.join(os.listdir('files')))
 
 
 @bot.message_handler(content_types=['document'])
@@ -76,16 +59,10 @@ def handle_document(message):
     file_info = bot.get_file(message.document.file_id)
     downloaded_file = bot.download_file(file_info.file_path)
     filename = message.document.file_name
-    hash_user_id = md5(str(message.from_user.id).encode()).hexdigest()
-    filename_for_current_user = hash_user_id + filename
     if filename.endswith('.csv'):
-        with open(os.path.join("files", filename_for_current_user), 'wb') as new_file:
+        with open(os.path.join("files", filename), 'wb') as new_file:
             new_file.write(downloaded_file)
         new_file.close()
         bot.reply_to(message, f"Файл {filename} отправлен на сервер")
-    insert_query = insert(user_data).values(telegram_user_id=hash_user_id, filename=filename_for_current_user)
-    with engine.connect() as con:
-        con.execute(insert_query)
-        con.commit()
 
 bot.polling(non_stop=True)
